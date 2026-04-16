@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHROMATRACE — Manette</title>
+
+    <!-- Polices -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles — découpés par écran -->
+    <link rel="stylesheet" href="css/controller-base.css">
+    <link rel="stylesheet" href="css/controller-login.css">
+    <link rel="stylesheet" href="css/controller-lobby.css">
+    <link rel="stylesheet" href="css/controller-game.css">
+    <link rel="stylesheet" href="css/controller-eliminated.css">
+    <link rel="stylesheet" href="css/controller-end.css">
+
+    <!-- Librairie joystick (locale — fonctionne sans internet) -->
+    <script src="js/nipplejs.min.js"></script>
+</head>
+<body>
+
+    <!-- ── Écran 1 — Login ──────────────────────────────── -->
+    <div class="screen" id="screen-login">
+        <img src="assets/logo.png" class="login-logo-img" alt="CHROMATRACE">
+        <div class="logo">CHROMATRACE</div>
+        <div class="login-subtitle">Rejoindre la partie</div>
+
+        <div class="input-group">
+            <div class="input-label">Pseudo</div>
+            <input type="text" class="pseudo-input" id="pseudo-input"
+                   placeholder="TON NOM" maxlength="12"
+                   autocomplete="off" autocorrect="off" spellcheck="false">
+        </div>
+
+        <div class="input-label color-label">Couleur</div>
+        <div class="color-grid" id="color-grid"></div>
+
+        <div class="error-msg" id="error-msg"></div>
+        <button type="button" class="btn-join" onclick="joinGame()">REJOINDRE</button>
+    </div>
+
+    <!-- ── Écran 2 — Lobby (attente) ───────────────────── -->
+    <div class="screen hidden" id="screen-lobby">
+
+        <div class="lobby-top">
+            <div class="lobby-avatar" id="lobby-avatar">?</div>
+            <div class="lobby-name" id="lobby-name">--</div>
+            <div class="lobby-online">
+                <span class="lobby-dot"></span>
+                Connecté
+            </div>
+        </div>
+
+        <div class="lobby-mid">
+            <div class="lobby-spinner"></div>
+            <div class="lobby-status">En attente du lancement...</div>
+            <div class="lobby-count" id="lobby-players">-- joueurs prêts</div>
+        </div>
+
+        <div class="lobby-rules">
+            <div class="lobby-rule"><span>🗺️</span> Sors de ta zone et reviens pour capturer du terrain</div>
+            <div class="lobby-rule"><span>☠️</span> Si quelqu'un touche ta traîne, tu es éliminé</div>
+            <div class="lobby-rule"><span>🏆</span> Gagne en ayant la plus grande surface à la fin</div>
+        </div>
+
+    </div>
+
+    <!-- ── Écran 2b — Compte à rebours + repérage ──────── -->
+    <div class="screen hidden" id="screen-countdown">
+
+        <!-- Identité joueur -->
+        <div class="cdown-header">
+            <div class="cdown-swatch" id="cdown-swatch"></div>
+            <div class="cdown-header-text">
+                <span class="cdown-find">Repère cette couleur sur l'écran</span>
+                <span class="cdown-pname" id="cdown-pname">--</span>
+            </div>
+        </div>
+
+        <!-- Mini-carte plein largeur (principal) -->
+        <div class="cdown-map-wrap">
+            <canvas id="minimap-canvas" class="cdown-minimap"></canvas>
+        </div>
+
+        <!-- Chiffre en bas (secondaire) -->
+        <div class="cdown-bottom">
+            <div class="ctrl-cdown-num" id="ctrl-cdown-num">3</div>
+        </div>
+
+    </div>
+
+    <!-- ── Écran 3 — Jeu (joystick) ────────────────────── -->
+    <div class="screen hidden" id="screen-game">
+        <div class="game-bar">
+            <div class="game-bar-name" id="game-pseudo">--</div>
+            <div class="game-bar-score">
+                <span class="game-bar-num" id="game-territory">0</span>
+                <span class="game-bar-unit">blocs</span>
+            </div>
+            <div class="game-bar-timer" id="game-timer">--:--</div>
+        </div>
+
+        <div id="joystick-zone">
+            <div id="joystick-area"></div>
+        </div>
+
+        <div class="items-bar">
+            <img src="assets/boost.png"  class="item-indicator" id="indicator-boost"  alt="Boost">
+            <img src="assets/shield.png" class="item-indicator" id="indicator-shield" alt="Shield">
+        </div>
+    </div>
+
+    <!-- ── Écran 4 — Éliminé ────────────────────────────── -->
+    <div class="screen hidden" id="screen-eliminated">
+        <div class="elim-title">ÉLIMINÉ</div>
+        <div class="elim-line"></div>
+
+        <div class="elim-reason" id="elim-reason">Tu as été éliminé</div>
+
+        <div class="elim-score-block">
+            <span class="elim-score-label">Score à l'élimination</span>
+            <span class="elim-score-value" id="elim-score">0</span>
+            <span class="elim-score-unit">blocs capturés</span>
+        </div>
+
+        <div class="elim-eye">👁️</div>
+        <div class="elim-watch">
+            Tu es éliminé — regarde la partie<br>
+            se terminer sur l'écran principal
+        </div>
+    </div>
+
+    <!-- ── Écran 5 — Fin de partie ──────────────────────── -->
+    <div class="screen hidden" id="screen-end">
+        <div class="end-logo">CHROMATRACE</div>
+        <div class="end-rank" id="end-rank">🏁</div>
+        <div class="end-pseudo" id="end-pseudo">--</div>
+        <div class="end-score" id="end-score">-- blocs capturés</div>
+        <p class="end-message">Regarde le podium sur l'écran principal !</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/controller.js"></script>
+
+</body>
+</html>

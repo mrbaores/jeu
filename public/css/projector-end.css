@@ -1,0 +1,167 @@
+/* ============================================================
+   projector-end.css — Écran de fin de partie
+   CHROMATRACE — Interface projecteur/admin
+   Contient : écran final, podium 3 places, classement complet,
+              bouton rejouer
+   ============================================================ */
+
+/* ── Écran fin de partie (fond et apparition) ─────────────── */
+#end-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10,15,30,0.95);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+}
+
+#end-screen.visible {
+    display: flex;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.end-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(217,70,239,0.5));
+}
+
+/* ── Podium (3 premières places) ───────────────────────────── */
+.podium {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+    height: 300px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+.podium-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 140px;
+}
+
+.podium-cube {
+    width: 96px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--bg);
+    background: var(--podium-color);
+    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: 0 0 30px var(--podium-color), inset 0 10px 20px rgba(255,255,255,0.5);
+    transition: all 0.5s ease;
+}
+
+.podium-rank-1 .podium-cube {
+    box-shadow: 0 0 38px var(--podium-color), inset 0 10px 20px rgba(255,255,255,0.55);
+}
+
+.podium-rank-1 .podium-name {
+    font-size: 22px;
+}
+
+.podium-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--podium-color);
+    text-shadow: 0 0 10px var(--podium-color);
+}
+
+.podium-territory {
+    font-size: 14px;
+    color: var(--muted-soft);
+    font-weight: 600;
+    background: rgba(0,0,0,0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+/* ── Classement complet (top 10) ───────────────────────────── */
+.final-ranking {
+    width: min(680px, 88vw);
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid rgba(6,182,212,0.25);
+    border-radius: 10px;
+    background: rgba(15,23,42,0.65);
+    padding: 10px 14px;
+}
+
+.final-rank-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.final-rank-row:last-child {
+    border-bottom: none;
+}
+
+.final-rank-pos {
+    width: 36px;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--muted-soft);
+}
+
+.final-rank-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+.final-rank-score {
+    width: 100px;
+    text-align: right;
+    color: #cbd5e1;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+}
+
+.btn-replay {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    padding: 16px 56px;
+    background: rgba(6,182,212,0.1);
+    border: 2px solid var(--cyan);
+    border-radius: 8px;
+    color: var(--cyan);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 20px;
+}
+.btn-replay:hover {
+    background: rgba(6,182,212,0.3);
+    box-shadow: 0 0 30px rgba(6,182,212,0.6);
+    transform: translateY(-3px);
+}

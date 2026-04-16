@@ -1,0 +1,123 @@
+/* ============================================================
+   projector-hud.css — HUD en jeu (timer + leaderboard)
+   CHROMATRACE — Interface projecteur/admin
+   Contient : barre HUD, timer (avec urgence), classement top 5
+   ============================================================ */
+
+/* ── HUD (conteneur superposé au canvas) ──────────────────── */
+#hud {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    pointer-events: none;
+}
+#hud.visible { display: block; }
+
+.hud-spacer { min-width: 220px; }
+
+.hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 20px;
+    background: linear-gradient(to bottom, rgba(15,23,42,0.9), transparent);
+}
+
+/* ── Timer central ─────────────────────────────────────────── */
+.hud-timer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--text);
+    text-shadow: 0 0 20px rgba(6,182,212,0.8);
+    letter-spacing: 4px;
+}
+
+.hud-timer.urgent {
+    color: var(--red);
+    animation: timerPulse 0.5s ease infinite alternate;
+}
+
+@keyframes timerPulse {
+    from { text-shadow: 0 0 10px rgba(239,68,68,0.5); }
+    to   { text-shadow: 0 0 30px rgba(239,68,68,1); }
+}
+
+/* ── Bloc timer (chiffres + barre de progression) ─────────── */
+.hud-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Piste de la barre (fond sombre arrondi) */
+.timer-bar-track {
+    width: 220px;
+    height: 6px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+/* Remplissage animé — largeur pilotée par JS via --timer-pct */
+.timer-bar-fill {
+    height: 100%;
+    width: calc(var(--timer-pct, 100) * 1%);
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    border-radius: 3px;
+    transition: width 0.9s linear, background 0.5s;
+}
+
+/* Passage en rouge quand urgent (≤ 10 s) */
+.timer-bar-fill.urgent {
+    background: var(--red);
+}
+
+/* ── Leaderboard (top 5) ───────────────────────────────────── */
+#leaderboard {
+    background: rgba(15,23,42,0.85);
+    border: 1px solid rgba(6,182,212,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    min-width: 220px;
+}
+
+.lb-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    margin-bottom: 8px;
+}
+
+.lb-entry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 0;
+}
+
+.lb-rank   { font-family: 'Orbitron', sans-serif; font-size: 12px; color: #475569; width: 20px; }
+.lb-color-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.lb-pseudo {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.lb-score  {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    color: var(--muted-soft);
+    min-width: 72px;
+    text-align: right;
+    white-space: nowrap;
+}

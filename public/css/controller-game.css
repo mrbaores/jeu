@@ -1,0 +1,131 @@
+/* ============================================================
+   controller-game.css — Écran 3 : Jeu (joystick + score)
+   CHROMATRACE — Interface manette mobile
+   ============================================================ */
+
+#screen-game {
+    background: #060d1c;
+    padding: 0;
+    justify-content: flex-start;
+    gap: 0;
+}
+
+/* ── Barre d'infos (haut) ────────────────────────────────── */
+.game-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+}
+
+.game-bar-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--player-color, var(--cyan));
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.game-bar-score {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.game-bar-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+}
+
+.game-bar-unit {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.game-bar-timer {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #64748b;
+    min-width: 52px;
+    text-align: right;
+}
+
+.game-bar-timer.urgent {
+    color: #f87171;
+    animation: timerBlink 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes timerBlink {
+    from { opacity: 1; }
+    to   { opacity: 0.25; }
+}
+
+/* ── Zone joystick ───────────────────────────────────────── */
+#joystick-zone {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#joystick-area {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+        0 0 0 8px rgba(255,255,255,0.01),
+        0 0 0 16px rgba(255,255,255,0.005);
+}
+
+/* ── Items (boost / shield) ─────────────────────────────── */
+.items-bar {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0 24px;
+    flex-shrink: 0;
+}
+
+.item-indicator {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.07);
+    padding: 8px;
+    opacity: 0.2;
+    transition: opacity 0.25s, transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    object-fit: contain;
+}
+
+#indicator-boost.active {
+    opacity: 1;
+    transform: scale(1.12);
+    border-color: var(--lime);
+    box-shadow: 0 0 24px rgba(132, 204, 22, 0.7);
+    background: rgba(132, 204, 22, 0.12);
+}
+
+#indicator-shield.active {
+    opacity: 1;
+    transform: scale(1.12);
+    border-color: var(--yellow);
+    box-shadow: 0 0 24px rgba(234, 179, 8, 0.7);
+    background: rgba(234, 179, 8, 0.12);
+}

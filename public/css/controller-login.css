@@ -1,0 +1,145 @@
+/* ============================================================
+   controller-login.css — Écran 1 : Connexion / Choix pseudo & couleur
+   CHROMATRACE — Interface manette mobile
+   Contient : fond, logo, saisie pseudo, grille de couleurs,
+              message d'erreur, bouton Rejoindre
+   ============================================================ */
+
+/* ── Fond de l'écran login ─────────────────────────────────── */
+#screen-login {
+    background: #0a1220;
+}
+
+/* ── Logo image ────────────────────────────────────────────── */
+.login-logo-img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(6,182,212,0.5));
+    animation: logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse {
+    0%, 100% { filter: drop-shadow(0 0 16px rgba(6,182,212,0.4)); transform: scale(1); }
+    50%       { filter: drop-shadow(0 0 36px rgba(217,70,239,0.7)); transform: scale(1.06); }
+}
+
+/* ── Logo CHROMATRACE ──────────────────────────────────────── */
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-sm     { font-size: 20px; }
+.accent-cyan { color: var(--cyan); }
+.color-label { width: 100%; max-width: 300px; }
+
+.login-subtitle {
+    font-size: 15px;
+    color: #475569;
+}
+
+/* ── Champ pseudo ──────────────────────────────────────────── */
+.input-group {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+}
+
+.pseudo-input {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pseudo-input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px rgba(6,182,212,0.2);
+}
+
+/* ── Grille de sélection de couleur ───────────────────────── */
+.color-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    justify-content: center;
+    max-width: 300px;
+}
+
+.color-option {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+    position: relative;
+}
+
+.color-option.selected {
+    border-color: #fff;
+    transform: scale(1.18);
+    box-shadow: 0 0 14px var(--c);
+}
+
+.color-option::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    opacity: 0;
+}
+.color-option.selected::after { opacity: 1; }
+
+.error-msg {
+    color: var(--red);
+    font-size: 12px;
+    min-height: 16px;
+    text-align: center;
+}
+
+.btn-join {
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+    background: var(--cyan);
+    border: none;
+    border-radius: 14px;
+    color: #0a1220;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.12s, filter 0.12s;
+    box-shadow: 0 4px 20px rgba(6,182,212,0.4);
+}
+.btn-join:active { transform: scale(0.96); filter: brightness(0.9); }

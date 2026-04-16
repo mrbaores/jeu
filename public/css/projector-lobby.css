@@ -1,0 +1,246 @@
+/* ============================================================
+   projector-lobby.css — Écran Lobby (panneau d'accueil)
+   CHROMATRACE — Interface projecteur/admin
+   Contient : titre, panneaux QR/joueurs/paramètres, boutons
+   ============================================================ */
+
+/* ── Lobby (conteneur principal) ──────────────────────────── */
+#lobby-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 32px;
+    background: radial-gradient(ellipse at center, #1e293b 0%, #0f172a 70%);
+}
+
+#lobby-screen::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(6,182,212,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6,182,212,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+#lobby-screen.hidden { display: none !important; }
+
+/* ── Titre principal animé ─────────────────────────────────── */
+.logo-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--lime), var(--yellow));
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s linear infinite;
+    filter: drop-shadow(0 0 30px rgba(6,182,212,0.5));
+}
+
+@keyframes gradientShift {
+    0%   { background-position: 0%; }
+    100% { background-position: 300%; }
+}
+
+/* ── Panneaux (grille des 3 cartes) ───────────────────────── */
+.lobby-panels { display: flex; gap: 40px; align-items: flex-start; }
+
+.panel {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(6,182,212,0.3);
+    border-radius: 12px;
+    padding: 24px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.panel-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(6,182,212,0.2);
+}
+
+/* ── Panneau connexion (QR code) ───────────────────────────── */
+.connect-panel { min-width: 280px; text-align: center; }
+
+.qr-wrapper {
+    display: inline-flex;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    margin: 10px 0;
+    box-shadow: 0 0 0 2px var(--lime), 0 0 24px rgba(132,204,22,0.4);
+}
+
+.connect-url {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    color: var(--lime);
+    padding: 7px 10px;
+    border: 1px solid rgba(132,204,22,0.35);
+    border-radius: 6px;
+    margin: 6px 0 4px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(132,204,22,0.5);
+    word-break: break-all;
+}
+
+.connect-hint { font-size: 13px; color: #64748b; line-height: 1.6; }
+
+/* ── Panneau joueurs connectés ─────────────────────────────── */
+.players-panel { min-width: 300px; max-height: 420px; overflow-y: auto; }
+
+.player-count {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.player-count-num { color: var(--cyan); }
+.player-count-max { font-size: 16px; color: #475569; }
+
+#player-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.player-entry {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    border-left: 3px solid var(--player-color);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.player-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--player-color);
+    box-shadow: 0 0 8px var(--player-color);
+}
+
+.player-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    text-shadow: 0 0 8px rgba(15, 23, 42, 0.8);
+}
+
+/* ── Panneau paramètres ────────────────────────────────────── */
+.settings-panel { min-width: 300px; }
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.setting-label { font-size: 15px; font-weight: 600; color: var(--muted-soft); }
+.setting-value { display: flex; align-items: center; gap: 10px; }
+
+.btn-small {
+    background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.4);
+    color: var(--cyan);
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.btn-small:hover { background: rgba(6,182,212,0.3); }
+
+.value-display {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: var(--text);
+    min-width: 60px;
+    text-align: center;
+}
+
+.toggle-btn {
+    background: rgba(100,116,139,0.2);
+    border: 1px solid rgba(100,116,139,0.4);
+    color: #64748b;
+    padding: 4px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+}
+.toggle-btn.on {
+    background: rgba(132,204,22,0.2);
+    border-color: rgba(132,204,22,0.5);
+    color: var(--lime);
+    box-shadow: 0 0 10px rgba(132,204,22,0.2);
+}
+
+.btn-start {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    padding: 18px 64px;
+    background: linear-gradient(135deg, var(--cyan), var(--cyan-dark));
+    border: none;
+    border-radius: 8px;
+    color: #0f172a;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 30px rgba(6,182,212,0.4);
+}
+.btn-start:hover    { transform: translateY(-2px); box-shadow: 0 0 50px rgba(6,182,212,0.6); }
+.btn-start:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn-rules {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(217,70,239,0.55);
+    color: #e9d5ff;
+    background: rgba(217,70,239,0.12);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-rules:hover {
+    transform: translateY(-1px);
+    background: rgba(217,70,239,0.22);
+    box-shadow: 0 0 20px rgba(217,70,239,0.35);
+}

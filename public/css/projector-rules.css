@@ -1,0 +1,179 @@
+/* ============================================================
+   projector-rules.css — Overlay "Règles & Histoire"
+   CHROMATRACE — Interface projecteur/admin
+   Contient : overlay de fond, carte modale, grille sections,
+              boutons fermer/configurer, responsive
+   ============================================================ */
+
+/* ── Fond semi-transparent de l'overlay ───────────────────── */
+.rules-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    background: rgba(2, 6, 23, 0.82);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    padding: 20px;
+}
+
+.rules-overlay.visible {
+    display: flex;
+}
+
+/* ── Carte de dialogue ─────────────────────────────────────── */
+.rules-card {
+    position: relative;
+    width: min(980px, 94vw);
+    max-height: 88vh;
+    overflow: auto;
+    border-radius: 14px;
+    border: 1px solid rgba(6,182,212,0.35);
+    background: linear-gradient(160deg, rgba(15,23,42,0.96), rgba(10,15,30,0.95));
+    box-shadow: 0 0 42px rgba(6,182,212,0.22);
+    padding: 24px 26px 20px;
+}
+
+.rules-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(148,163,184,0.45);
+    border-radius: 8px;
+    background: rgba(15,23,42,0.65);
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* ── En-tête (logo + titre) ────────────────────────────────── */
+.rules-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.rules-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(6,182,212,0.45));
+}
+
+.rules-kicker {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.rules-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+}
+
+/* ── Grille des sections de règles ─────────────────────────── */
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.rules-section {
+    border: 1px solid rgba(100,116,139,0.2);
+    border-left-width: 3px;
+    border-radius: 10px;
+    padding: 16px;
+    background: rgba(15,23,42,0.6);
+    transition: transform 0.2s;
+}
+.rules-section:hover { transform: translateY(-2px); }
+
+/* Couleur de la bordure gauche selon la section */
+.rules-section[data-accent="cyan"]    { border-left-color: var(--cyan); }
+.rules-section[data-accent="lime"]    { border-left-color: var(--lime); }
+.rules-section[data-accent="red"]     { border-left-color: var(--red); }
+.rules-section[data-accent="magenta"] { border-left-color: var(--magenta); }
+
+/* Icône en haut à gauche */
+.rules-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+    line-height: 1;
+}
+
+/* Titre coloré selon la section */
+.rules-section[data-accent="cyan"]    h3 { color: var(--cyan); }
+.rules-section[data-accent="lime"]    h3 { color: var(--lime); }
+.rules-section[data-accent="red"]     h3 { color: var(--red); }
+.rules-section[data-accent="magenta"] h3 { color: var(--magenta); }
+
+.rules-section h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.rules-section p,
+.rules-section li {
+    color: #cbd5e1;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.rules-section ul {
+    margin-left: 18px;
+    display: grid;
+    gap: 6px;
+}
+
+.rules-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-rules-secondary,
+.btn-rules-primary {
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-rules-secondary {
+    border: 1px solid rgba(148,163,184,0.4);
+    background: rgba(15,23,42,0.65);
+    color: #cbd5e1;
+}
+
+.btn-rules-primary {
+    border: 1px solid rgba(6,182,212,0.5);
+    background: linear-gradient(135deg, rgba(6,182,212,0.25), rgba(59,130,246,0.2));
+    color: #67e8f9;
+}
+
+/* ── Responsive mobile ─────────────────────────────────────── */
+@media (max-width: 900px) {
+    .rules-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rules-title {
+        font-size: 22px;
+    }
+}
